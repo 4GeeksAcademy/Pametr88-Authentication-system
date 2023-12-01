@@ -17,6 +17,35 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
+			registro: async (name, userName, address, email, password, city, state, dateOfBirth, isActive) => {
+				try{
+					const response = await fetch("https://bug-free-space-xylophone-q7qvjvgjxwwx29pxg-3001.app.github.dev/api/sign_up",{
+					method: "POST",
+					body: JSON.stringify({
+							name: name,
+							userName: userName,
+							address: address,
+							email: email,
+							password: password,
+							city: city,
+							state: state,
+							dateOfBirth: dateOfBirth,
+							isActive: isActive
+						}),
+						headers: {
+							"Content-type": "application/json"
+						}
+					})
+					
+					const data = await response.json()
+					console.log(data)
+				
+				}catch(error){
+					console.log(error)
+				}
+			},
+			
+			
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
