@@ -13,24 +13,35 @@ export const Home = () => {
 	const [password, setPasword] = useState("")
 	const [city, setCity] = useState("")
 	const [state, setState] = useState("")
-	const [dateOfBirth, setdateOfBirth] = useState("")
+	const [date, setDate] = useState("")
 	const [isActive, setIsActive] = useState(false)
 
 	const navigate = useNavigate()
 
-	const handlerSignUp = (e) => {
-		e.preventDefault()
-		actions.registro(name, userName, address, email, password, city, state, dateOfBirth, isActive)
-		navigate("/demo")
-		setName ("")
-		setUserName ("")
-		setAddress ("")
-		setEmail ("")
-		setPasword ("")
-		setCity ("")
-		setState ("")
-		setdateOfBirth ("")
-		setIsActive ("")
+	const crearNuevoUsuario = async () => {
+		try {
+
+			if (name == "" || userName == "" || address == "" || email == "" || password == "" || city == "" || state == "" || date == "") {
+				return alert("all fields are requierd")
+			}
+
+			let newUser = {
+				name: name,
+				userName: userName,
+				address: address,
+				email: email,
+				password: password,
+				city: city,
+				state: state,
+				date: date
+			}
+			await actions.sign(newUser)
+			await actions.test()
+			navigate("/demo")
+
+		} catch (error) {
+			console.log(error)
+		}
 	}
 	return (
 		<div className="container">
@@ -65,7 +76,7 @@ export const Home = () => {
 				</div>
 				<div className="col-md-4">
 					<label className="form-label">Date of birth</label>
-					<input type="date" className="form-control" value={dateOfBirth} onChange={(e)=>setdateOfBirth(e.target.value)}/>
+					<input type="date" className="form-control" value={date} onChange={(e)=>setDate(e.target.value)}/>
 				</div>
 				<div className="col-12">
 					<div className="form-check">
@@ -76,7 +87,7 @@ export const Home = () => {
 					</div>
 				</div>
 				<div className="col-12">
-					<button type="submit" className="btn btn-primary" onClick={(e)=>handlerSignUp(e)}>Sign in</button>
+					<button type="submit" className="btn btn-primary" onClick={crearNuevoUsuario}>Sign in</button>
 				</div>
 			</form>
 		</div>

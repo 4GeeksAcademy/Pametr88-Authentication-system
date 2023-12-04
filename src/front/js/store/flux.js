@@ -17,21 +17,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
-			registro: async (name, userName, address, email, password, city, state, dateOfBirth, isActive) => {
+			registro: async (newUser) => {
 				try{
 					const response = await fetch("https://bug-free-space-xylophone-q7qvjvgjxwwx29pxg-3001.app.github.dev/api/sign_up",{
 					method: "POST",
-					body: JSON.stringify({
-							name: name,
-							userName: userName,
-							address: address,
-							email: email,
-							password: password,
-							city: city,
-							state: state,
-							dateOfBirth: dateOfBirth,
-							isActive: isActive
-						}),
+					body: JSON.stringify(
+							newUser
+						),
 						headers: {
 							"Content-type": "application/json"
 						}
@@ -61,19 +53,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}catch(error){
 					console.log("Error loading message from backend", error)
 				}
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
+			
+					//reset the global store
 				setStore({ demo: demo });
 			}
 		}
