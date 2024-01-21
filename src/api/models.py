@@ -11,7 +11,7 @@ class User(db.Model):
     password = db.Column(db.String(150), unique=False, nullable=False)
     state = db.Column(db.String(50), unique=True, nullable=False)
     city = db.Column(db.String(50), unique=True, nullable=False)
-    date = db.Column(db.Date, unique=False, nullable=False)
+    # date = db.Column(db.Date, unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
     
 
@@ -25,7 +25,7 @@ class User(db.Model):
             "user_name": self.user_name,
             "address": self.address,
             "email": self.email,
-            "date": self.date.strftime('%Y-%m-%d %H:%M:%S'),
+            # "date": self.date.strftime('%Y-%m-%d %H:%M:%S'),
             "state": self.state,
             "city": self.city,
             "is_active": self.is_active

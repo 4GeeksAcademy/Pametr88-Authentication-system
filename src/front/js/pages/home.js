@@ -32,7 +32,7 @@ export const Home = () => {
 				password: password,
 				city: city,
 				state: state,
-				date: date
+				// date: date
 			}
 			await actions.sign(newUser)
 			//await actions.test()
@@ -65,18 +65,18 @@ export const Home = () => {
 					<label className="form-label">Password</label>
 					<input type="password" className="form-control" id="inputPassword4" value={password} onChange={(e)=>setPasword(e.target.value)}/>
 				</div>
-				<div className="col-md-4">
+				<div className="col-md-6">
 					<label className="form-label">City</label>
 					<input type="text" className="form-control" id="inputCity" value={city} onChange={(e)=>setCity(e.target.value)}/>
 				</div>
-				<div className="col-md-4">
+				<div className="col-md-6">
 					<label className="form-label">State</label>
 					<input type="text" className="form-control" id="inputState" value={state} onChange={(e)=>setState(e.target.value)}/>
 				</div>
-				<div className="col-md-4">
+				{/* <div className="col-md-4">
 					<label className="form-label">Date of birth</label>
 					<input type="date" className="form-control" value={date} onChange={(e)=>setDate(e.target.value)}/>
-				</div>
+				</div> */}
 				<div className="col-12">
 					<div className="form-check">
 					<input className="form-check-input" type="checkbox" id="gridCheck" value={isActive} onChange={(e)=>setIsActive(e.target.value)}/>
