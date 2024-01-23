@@ -39,7 +39,7 @@ def create_User():
             city = body.get("city"),
             state = body.get("state"),
             # date = body.get("date"),
-            is_active = True
+            # is_active = True
         )
 
         db.session.add(new_user)

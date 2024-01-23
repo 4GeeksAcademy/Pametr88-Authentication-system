@@ -1,41 +1,68 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { useNavigate, Link } from "react-router-dom";
 
 import { Context } from "../store/appContext";
 
 export const Demo = () => {
 	const { store, actions } = useContext(Context);
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const navigate = useNavigate();
+	const [error, setError] = useState(null)
+
+	const handlerlogInNewUser = async () => {
+		try {
+			let newLogIn = {
+				email: email,
+				password: password,
+			};
+
+			const result = await actions.logIn(newLogIn);
+
+			console.log("Resultado de actions.logIn:", result); // Agrega este log
+
+			if (result.access_token) {
+				localStorage.setItem("token", result.access_token);
+				console.log("Usuario logueado:", result.name);
+				actions.privateRoute();
+				navigate("/");
+			}
+		} catch (e) {
+			console.error(e);
+			setError("An error occurred while logging in");
+		}
+	};
 
 	return (
 		<div className="container">
-			<ul className="list-group">
-				{store.demo.map((item, index) => {
-					return (
-						<li
-							key={index}
-							className="list-group-item d-flex justify-content-between"
-							style={{ background: item.background }}>
-							<Link to={"/single/" + index}>
-								<span>Link to: {item.title}</span>
-							</Link>
-							{// Conditional render example
-							// Check to see if the background is orange, if so, display the message
-							item.background === "orange" ? (
-								<p style={{ color: item.initial }}>
-									Check store/flux.js scroll to the actions to see the code
-								</p>
-							) : null}
-							<button className="btn btn-success" onClick={() => actions.changeColor(index, "orange")}>
-								Change Color
-							</button>
-						</li>
-					);
-				})}
-			</ul>
-			<br />
-			<Link to="/">
-				<button className="btn btn-primary">Back home</button>
-			</Link>
+
+			<div className="right-log">
+
+				<h2 className="title-log">Inicia sesion</h2>
+
+				<form>
+					<div className="mb-3">
+						<label htmlFor="exampleInputEmail1" className="form-label">Email address :</label>
+						<input type="email" onChange={(e) => setEmail(e.target.value)} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+					</div>
+					<div className="mb-3">
+						<label htmlFor="exampleInputPassword1" className="form-label">Password :</label>
+						<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" id="exampleInputPassword1" />
+					</div>					
+					{error && <p className="error-message">{error}</p>}
+				</form>
+
+				<div className="butons">
+
+					<button type="button" onClick={handlerlogInNewUser} className="btn btn-primary singup">Iniciar sesion </button>
+
+					<Link to="/signup">
+						<button className="btn btn-primary singup">Crear cuenta</button>
+					</Link>
+
+				</div>
+
+			</div>
 		</div>
 	);
 };

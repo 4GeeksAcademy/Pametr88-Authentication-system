@@ -15,68 +15,95 @@ const getState = ({ getStore, getActions, setStore }) => {
 					initial: "white"
 				}
 			],
-			user: []
+			user: [],
+			currentUser: null,
+			loggedUserId:null
 		},
 		actions: {
 			//Use getActions to call a function within a fuction
-			sign: async (newUser) => {
-				
-					const response = await fetch(apiUrl+"/sign_up", {
+			sign_up: async (newUser) => {
+				try {
+
+					let result = await fetch(`${apiUrl}/sign_up`, {
 						method: "POST",
-						body: JSON.stringify(
-							newUser
-						),
+						body: JSON.stringify(newUser),
+						headers: {
+							"Content-Type": "application/json"
+						}
+					})
+					const data = await result.json()
+					console.log("respuesta al intentar un new user:", data);
+					return data
+				} catch (e) {
+					console.error(e)
+				}
+			},
+
+			logIn: async (newLogIn) => {
+
+				try {
+					let result = await fetch(`${apiUrl}/login`, {
+						method: "POST",
+						body: JSON.stringify(newLogIn),
 						headers: {
 							"Content-Type": "application/json"
 						}
 					})
 
-					if (!response.ok) {
-						throw new Error("Error with the request");
+					const data = await result.json();
+					console.log("respuesta al intentar iniciar sesión:", data);
+					localStorage.setItem("token", data.token);
+					setStore({ loggedUserId: data.id });
+					return data;
+
+				} catch (e) {
+					console.error(e);
+				}
+			},
+
+			privateRoute: async () => {
+				try {
+
+					const options = {
+						method: "Get",
+						headers: {
+							Authorization: 'Bearer ' + localStorage.getItem("token")
+
+						}
+					};
+					const response = await fetch(apiUrl + "/isAuth", options)
+					console.log(response)
+					const res = await response.json()
+					console.log(res)
+					if (response.ok) {
+						setStore({ currentUser: res })
+						return null
 					}
-	
-					const data = await response.json();
-					alert("usuario registrado")
-					console.log("respuesta al intentar un new user:", data);
-			
-			}
-			// getUser: () => {
-			// 	fetch("https://bug-free-space-xylophone-q7qvjvgjxwwx29pxg-3001.app.github.dev/api/user")
-			// 		.then(response => {
-			// 			// Verifica si la respuesta fue exitosa (código 200)
-			// 			if (!response.ok) {
-			// 				throw new Error(`Error: ${response.status} - ${response.statusText}`);
-			// 			}
-			// 			// Devuelve los datos en formato JSON
-			// 			return response.json();
-			// 		})
-			// 		.then(data => {
-			// 			// Maneja los datos (en este caso, los usuarios serializados)
-			// 			console.log(data);
-			// 		})
-			// 		.catch(error => {
-			// 			// Maneja cualquier error de la solicitud
-			// 			console.error(error);
-			// 		});
-			// },
+					setStore({ currentUser: false })
 
-			// getMessage: async () => {
-			// 	try{
-			// 		// fetching data from the backend
-			// 		const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-			// 		const data = await resp.json()
-			// 		setStore({ message: data.message })
-			// 		// don't forget to return something, that is how the async resolves
-			// 		return data;
-			// 	}catch(error){
-			// 		console.log("Error loading message from backend", error)
-			// 	}
 
-			// 		//reset the global store
-			// 	//setStore({ demo: demo });
-			//}
-		}
-	};
-};
+				} catch (error) {
+					console.error(error)
+					setStore({ currentUser: false })
+
+				}},
+
+				logout: async () => {
+					try {
+						const actions = getActions()
+						localStorage.removeItem('token');
+						setStore({ loggedUserId: null});
+						actions.privateRoute()
+						return true;
+					} catch (error) {
+						console.error('Error during logout:', error);
+						return false;
+					}
+				}
+
+			}	
+		}			
+	}
+
 
 export default getState;
