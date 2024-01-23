@@ -1,4 +1,41 @@
-.formulario{
+.formulario {
+    background-color: #3498db;
+    color: #fff; 
+    padding: 20px; 
+    border-radius: 10px;
+  }
+  
+  .forminformation-childs h2 {
+    color: #fff; 
+  }
+  
+  .form label i {
+    color: #fff;
+  }
+  
+  .info-buton {
+    background-color: #3498db;
+    color: #fff;
+    border: 1px solid #3498db;
+    border-radius: 5px; 
+  }
+  
+  .info-buton:hover {
+    background-color: #2980b9;
+    border-color: #2980b9;
+  }
+
+  .sig-but{
+   background-color: coral;
+  }
+
+  .forminformation-childs {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    text-align: center;    
-}
+    text-align: center;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  

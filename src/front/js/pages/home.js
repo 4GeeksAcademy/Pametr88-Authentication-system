@@ -12,14 +12,14 @@ export const Home = () => {
 			{store.currentUser ?
 
 				<div className="jumbotron">
-					<h2 className="display-4">Bienvenido</h2>
+					<h2 className="tittl">Bienvenido {store.currentUser.name}</h2>
 					
 					<hr className="my-4" />
 				</div>
 
 				:
 				<div>
-					<h2>Ingresa a nuestra app</h2>
+					<h2 className="tittl">Ingresa a nuestra app</h2>
 				</div>
 
 			}

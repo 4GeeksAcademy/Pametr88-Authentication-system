@@ -27,7 +27,7 @@ def create_User():
             if field not in body or not body[field]:
                 return jsonify({"error": f"El campo '{field}' es requerido y no puede estar vacío"}), 400
             
-        raw_password = body.get('password')        
+                
         password_hash = bcrypt.generate_password_hash(body.get("password")).decode('utf-8')
     
         new_user = User(

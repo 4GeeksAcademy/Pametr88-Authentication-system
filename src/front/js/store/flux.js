@@ -2,19 +2,7 @@ const apiUrl=process.env.BACKEND_URL+"/api"
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			],
+			message: null,			
 			user: [],
 			currentUser: null,
 			loggedUserId:null
@@ -22,6 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		actions: {
 			//Use getActions to call a function within a fuction
 			sign_up: async (newUser) => {
+				console.log(newUser)
 				try {
 
 					let result = await fetch(`${apiUrl}/sign_up`, {

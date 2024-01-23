@@ -5,7 +5,7 @@ import "../../styles/navbar.css"
 
 export const Navbar = () => {
 	const navigate = useNavigate();
-	const {store,actions} = useContext(Context)
+	const { store, actions } = useContext(Context)
 	const handleLogout = async () => {
 		try {
 			const success = await actions.logout(); // Asegúrate de que la función logout esté disponible en tus acciones
@@ -21,26 +21,28 @@ export const Navbar = () => {
 	};
 	return (
 		<nav className="navbar fondo">
-			<div className="container raw">
-				
-				{store.currentUser ?
-				<div className="col-2">
-					<button className="btn btn-primary" onClick={handleLogout}>Log-out</button>
-				</div>
-				:
-				<div>
-					<div className="col-2">
-					<Link to="/signUp" className="decoration">
-						<button className="btn btn-primary">Registrate</button>
-					</Link>
+			<div className="container d-flex justify-content-end">
+
+				{!store.currentUser ?
+					<div className="d-flex">
+						<div className="me-3">
+							<Link to="/signUp" className="decoration">
+								<button className="btn boton">Registrate</button>
+							</Link>
+						</div>
+						<div className="">
+							<Link to="/demo">
+								<button className="btn boton">Logueate</button>
+							</Link>
+						</div>
 					</div>
-					<div className="col-2">
-					<Link to="/demo">
-						<button className="btn btn-primary">Logueate</button>
-					</Link>
+
+					:
+
+					<div className="">
+						<button className="btn boton" onClick={handleLogout}>Log-out</button>
 					</div>
-				</div>
-				}				
+				}
 			</div>
 		</nav>
 	);

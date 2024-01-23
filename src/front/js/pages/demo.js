@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
-
 import { Context } from "../store/appContext";
+import "../../styles/demo.css";
 
 export const Demo = () => {
 	const { store, actions } = useContext(Context);
@@ -34,7 +34,7 @@ export const Demo = () => {
 	};
 
 	return (
-		<div className="container">
+		<div className="container mt-5">
 
 			<div className="right-log">
 
@@ -54,10 +54,10 @@ export const Demo = () => {
 
 				<div className="butons">
 
-					<button type="button" onClick={handlerlogInNewUser} className="btn btn-primary singup">Iniciar sesion </button>
+					<button type="button" onClick={handlerlogInNewUser} className="btn bot">Iniciar sesion </button>
 
 					<Link to="/signup">
-						<button className="btn btn-primary singup">Crear cuenta</button>
+						<button className="btn bot">Crear cuenta</button>
 					</Link>
 
 				</div>
